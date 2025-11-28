@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emergency Health Alert & Fall Detection</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Real-Time Emergency Health Alert & Fall Detection</h1>
+    <p class="subtitle">Student prototype • 24h hackathon build</p>
+  </header>
+
+  <main>
+    <section class="status-card">
+      <div>
+        <h2>Status</h2>
+        <div id="statusText">Idle</div>
+        <div class="controls">
+          <button id="startBtn">Start Streaming</button>
+          <button id="stopBtn" disabled>Stop Streaming</button>
+          <label class="toggle">
+            <input type="checkbox" id="simulateFall" />
+            <span>Simulate Fall</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="useDeviceSensors" />
+            <span>Use Device Sensors</span>
+          </label>
+        </div>
+        <div class="controls" style="margin-top:8px">
+          <input id="backendUrl" placeholder="Backend URL e.g. http://192.168.1.10:8081/api" style="flex:1; min-width:260px; padding:6px 8px; border-radius:6px; border:1px solid #2a3d66; background:#0b1327; color:#e9eef7" />
+          <button id="saveBackend">Save</button>
+        </div>
+        <div class="small" id="permNote"></div>
+        <div class="small" id="netStatus"></div>
+      </div>
+      <div>
+        <h2>Location</h2>
+        <div class="coords">
+          <div>Lat: <span id="lat">-</span></div>
+          <div>Lng: <span id="lng">-</span></div>
+          <div class="note">Map placeholder (use any map later)</div>
+          <div class="controls" style="margin-top:8px">
+            <label class="toggle">
+              <input type="checkbox" id="overrideLoc" />
+              <span>Manual Location</span>
+            </label>
+            <input id="ovLat" placeholder="lat" style="width:120px; padding:6px 8px; border-radius:6px; border:1px solid #2a3d66; background:#0b1327; color:#e9eef7" />
+            <input id="ovLng" placeholder="lng" style="width:120px; padding:6px 8px; border-radius:6px; border:1px solid #2a3d66; background:#0b1327; color:#e9eef7" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lists">
+      <div class="list">
+        <h2>Live Alerts</h2>
+        <ul id="alerts"></ul>
+      </div>
+      <div class="list">
+        <h2>Recent Events</h2>
+        <ul id="events"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>Backend: Spring Boot + H2 • ML: stubbed model call • SMS: mocked by logs</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

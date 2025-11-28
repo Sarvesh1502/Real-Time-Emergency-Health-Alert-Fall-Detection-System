@@ -1,0 +1,1 @@
+{"type": "logistic_regression", "features": ["accel_mag", "gyro_mag"], "weights": [0.012224888015851233, 0.10000126056628333], "bias": -8.320765434245825, "threshold": 0.6}

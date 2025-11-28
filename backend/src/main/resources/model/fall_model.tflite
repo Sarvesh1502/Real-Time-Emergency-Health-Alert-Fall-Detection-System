@@ -1,0 +1,2 @@
+This is a placeholder for a prebuilt lightweight ML model (e.g., tiny TFLite). Not trained here.
+The backend loads this file from classpath and uses a stub predictor for demo.
