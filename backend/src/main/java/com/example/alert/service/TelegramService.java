@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -30,29 +31,69 @@ public class TelegramService {
     return (chatIdProp != null && !chatIdProp.isBlank()) ? chatIdProp : (env == null ? "" : env);
   }
 
+  /**
+   * Sends a message to the configured Telegram chat
+   * @param text The message text to send
+   * @return true if message was sent successfully, false otherwise
+   */
   public boolean sendMessage(String text) {
-    String botToken = getBotToken();
-    String chatId = getChatId();
-    if (botToken.isBlank() || chatId.isBlank()) {
-      System.out.println("[Telegram] Missing bot token or chat id. Skipping send.");
+    // Input validation
+    if (text == null || text.trim().isEmpty()) {
+      System.out.println("[Telegram] Error: Message text cannot be empty");
       return false;
     }
+
+    String botToken = getBotToken();
+    String chatId = getChatId();
+    
+    // Check configuration
+    if (botToken.isBlank() || chatId.isBlank()) {
+      System.err.println("[Telegram] Error: Missing bot token or chat ID. " +
+          "Please check your configuration.");
+      System.err.println("[Telegram] Bot Token: " + 
+          (botToken.isBlank() ? "[MISSING]" : "[SET]"));
+      System.err.println("[Telegram] Chat ID: " + 
+          (chatId.isBlank() ? "[MISSING]" : chatId));
+      return false;
+    }
+
     try {
       String url = "https://api.telegram.org/bot" + botToken + "/sendMessage";
-
+      System.out.println("[Telegram] Sending message to chat " + chatId);
+      
+      // Prepare request
       HttpHeaders headers = new HttpHeaders();
       headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
       MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
       form.add("chat_id", chatId);
       form.add("text", text);
+      form.add("parse_mode", "HTML");
 
-      HttpEntity<MultiValueMap<String, String>> req = new HttpEntity<>(form, headers);
-      rest.postForEntity(url, req, String.class);
-      System.out.println("[Telegram] Message sent.");
-      return true;
+      HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(form, headers);
+      
+      // Log request (without sensitive data)
+      System.out.println("[Telegram] Sending request to: " + 
+          url.replace(botToken, "***REDACTED***"));
+      
+      // Send request
+      ResponseEntity<String> response = rest.postForEntity(url, request, String.class);
+      
+      // Log response status
+      System.out.println("[Telegram] Response status: " + response.getStatusCode());
+      
+      if (response.getStatusCode().is2xxSuccessful()) {
+        System.out.println("[Telegram] Message sent successfully");
+        return true;
+      } else {
+        System.err.println("[Telegram] Failed to send message. Status: " + 
+            response.getStatusCode() + ", Body: " + response.getBody());
+        return false;
+      }
+      
     } catch (Exception e) {
-      System.out.println("[Telegram] Failed to send: " + e.getMessage());
+      System.err.println("[Telegram] Error sending message: " + e.getMessage());
+      e.printStackTrace();
       return false;
     }
   }

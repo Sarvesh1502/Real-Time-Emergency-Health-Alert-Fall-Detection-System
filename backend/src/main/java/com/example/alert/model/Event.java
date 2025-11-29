@@ -13,6 +13,7 @@ public class Event {
   private double ax; private double ay; private double az;
   private double gx; private double gy; private double gz;
   private Double lat; private Double lng;
+  private String context;
 
   public Long getId() { return id; }
   public void setId(Long id) { this.id = id; }
@@ -34,4 +35,6 @@ public class Event {
   public void setLat(Double lat) { this.lat = lat; }
   public Double getLng() { return lng; }
   public void setLng(Double lng) { this.lng = lng; }
+  public String getContext() { return context; }
+  public void setContext(String context) { this.context = context; }
 }
