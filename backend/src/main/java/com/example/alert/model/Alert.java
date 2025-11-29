@@ -12,6 +12,9 @@ public class Alert {
   private long timestamp;
   private String reason;
   private Double lat; private Double lng;
+  private String status; // PENDING_SILENT, PENDING_CONFIRM, SENT, CANCELLED
+  private Long confirmStartsAt; // epoch ms when modal should appear
+  private Long expiryAt; // epoch ms when auto-send should occur
 
   public Long getId() { return id; }
   public void setId(Long id) { this.id = id; }
@@ -23,4 +26,10 @@ public class Alert {
   public void setLat(Double lat) { this.lat = lat; }
   public Double getLng() { return lng; }
   public void setLng(Double lng) { this.lng = lng; }
+  public String getStatus() { return status; }
+  public void setStatus(String status) { this.status = status; }
+  public Long getConfirmStartsAt() { return confirmStartsAt; }
+  public void setConfirmStartsAt(Long confirmStartsAt) { this.confirmStartsAt = confirmStartsAt; }
+  public Long getExpiryAt() { return expiryAt; }
+  public void setExpiryAt(Long expiryAt) { this.expiryAt = expiryAt; }
 }

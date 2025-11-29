@@ -4,12 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Emergency Health Alert & Fall Detection</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='14' font-size='14'%3E%E2%9A%A0%EF%B8%8F%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
     <h1>Real-Time Emergency Health Alert & Fall Detection</h1>
-    <p class="subtitle">Student prototype • 24h hackathon build</p>
+   
   </header>
 
   <main>
@@ -41,7 +42,7 @@
         <div class="coords">
           <div>Lat: <span id="lat">-</span></div>
           <div>Lng: <span id="lng">-</span></div>
-          <div class="note">Map placeholder (use any map later)</div>
+          <!-- <div class="note">Map placeholder (use any map later)</div>
           <div class="controls" style="margin-top:8px">
             <label class="toggle">
               <input type="checkbox" id="overrideLoc" />
@@ -49,7 +50,7 @@
             </label>
             <input id="ovLat" placeholder="lat" style="width:120px; padding:6px 8px; border-radius:6px; border:1px solid #2a3d66; background:#0b1327; color:#e9eef7" />
             <input id="ovLng" placeholder="lng" style="width:120px; padding:6px 8px; border-radius:6px; border:1px solid #2a3d66; background:#0b1327; color:#e9eef7" />
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
@@ -66,9 +67,21 @@
     </section>
   </main>
 
-  <footer>
+  <!-- <footer>
     <small>Backend: Spring Boot + H2 • ML: stubbed model call • SMS: mocked by logs</small>
-  </footer>
+  </footer> -->
+
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:9999;">
+    <div style="background:#0b1327; border:1px solid #2a3d66; border-radius:10px; padding:16px; width:min(92vw,480px); color:#e9eef7;">
+      <h3 style="margin:0 0 8px 0;">Possible fall detected</h3>
+      <p style="margin:0 0 8px 0;">Is everything okay? Sending help in <span id="confirmCountdown">10</span>s...</p>
+      <div class="controls" style="margin-top:12px; display:flex; gap:8px;">
+        <button id="btnYesOk" style="background:#1f6feb;">Yes, I'm OK</button>
+        <button id="btnNoHelp" style="background:#d73a49;">No, send help</button>
+      </div>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>

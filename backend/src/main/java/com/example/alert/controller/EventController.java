@@ -67,12 +67,28 @@ public class EventController {
 
     Alert alert = detectionService.process(e);
 
-    return Map.of("saved", true, "alert", alert != null);
+    if (alert != null) {
+      return Map.of(
+        "saved", true,
+        "alert", true,
+        "alertId", alert.getId(),
+        "status", alert.getStatus(),
+        "confirmStartsAt", alert.getConfirmStartsAt(),
+        "expiryAt", alert.getExpiryAt()
+      );
+    }
+    return Map.of("saved", true, "alert", false);
   }
 
   @GetMapping("/alerts")
   public List<Alert> alerts() {
     return alertRepo.recent30();
+  }
+
+  @PostMapping("/alerts/{id}/confirm")
+  public Map<String, Object> confirmAlert(@PathVariable("id") Long id, @RequestParam("ok") boolean ok) {
+    detectionService.confirmAlert(id, ok);
+    return Map.of("ok", true);
   }
 
   @GetMapping("/events/recent")
