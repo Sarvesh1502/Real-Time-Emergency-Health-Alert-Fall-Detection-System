@@ -49,9 +49,8 @@ public class DetectionService {
 
     // Debug log metrics each event (compact)
     try {
-      System.out.println(String.format(
-        "[DETECT] ts=%d aMag=%.2f gMag=%.2f ml=%.2f ctx=%s dropLike=%s",
-        e.getTimestamp(), accelMag, gyroMag, mlScore, String.valueOf(e.getContext()), String.valueOf(dropLike))
+      System.out.println("[DETECT] ts=%d aMag=%.2f gMag=%.2f ml=%.2f ctx=%s dropLike=%s".formatted(
+          e.getTimestamp(), accelMag, gyroMag, mlScore, String.valueOf(e.getContext()), String.valueOf(dropLike))
       );
     } catch (Exception ignore) {}
 
@@ -64,10 +63,10 @@ public class DetectionService {
     }
 
     if (alert) {
-      System.out.println("[DETECT] decision=ALERT ruleHit=" + ruleHit + " mlScore=" + String.format("%.2f", mlScore));
+      System.out.println("[DETECT] decision=ALERT ruleHit=" + ruleHit + " mlScore=" + "%.2f".formatted(mlScore));
       Alert a = new Alert();
       a.setTimestamp(e.getTimestamp());
-      a.setReason("Hybrid detection: rule=" + ruleHit + ", mlScore=" + String.format("%.2f", mlScore) + (dropLike? ", dropLike=true":""));
+      a.setReason("Hybrid detection: rule=" + ruleHit + ", mlScore=" + "%.2f".formatted(mlScore) + (dropLike? ", dropLike=true":""));
       a.setLat(e.getLat());
       a.setLng(e.getLng());
       long now = System.currentTimeMillis();
@@ -101,7 +100,7 @@ public class DetectionService {
       System.out.println("[ALERT] Pending (silent) for possible fall at ts=" + a.getTimestamp());
       return a;
     }
-    System.out.println("[DETECT] decision=NO_ALERT ruleHit=" + ruleHit + " mlScore=" + String.format("%.2f", mlScore));
+    System.out.println("[DETECT] decision=NO_ALERT ruleHit=" + ruleHit + " mlScore=" + "%.2f".formatted(mlScore));
     return null;
   }
 

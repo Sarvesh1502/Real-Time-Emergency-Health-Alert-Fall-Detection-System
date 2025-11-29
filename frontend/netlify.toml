@@ -1,0 +1,17 @@
+[build]
+publish = "."
+command = ""
+
+# Optional: set headers
+[[headers]]
+for = "/*"
+  [headers.values]
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "SAMEORIGIN"
+  Referrer-Policy = "no-referrer-when-downgrade"
+
+# Redirect any unknown routes to index.html (SPA-friendly)
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

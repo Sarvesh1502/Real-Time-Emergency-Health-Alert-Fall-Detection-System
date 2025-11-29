@@ -60,10 +60,10 @@ public class EventController {
 
     Object lat = payload.get("lat");
     Object lng = payload.get("lng");
-    e.setLat(lat instanceof Number ? ((Number)lat).doubleValue() : null);
-    e.setLng(lng instanceof Number ? ((Number)lng).doubleValue() : null);
+    e.setLat(lat instanceof Number n ? n.doubleValue() : null);
+    e.setLng(lng instanceof Number n ? n.doubleValue() : null);
     Object ctx = payload.get("context");
-    if (ctx instanceof String) e.setContext((String) ctx);
+    if (ctx instanceof String string) e.setContext(string);
 
     eventRepo.save(e);
 
